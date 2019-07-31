@@ -7,4 +7,8 @@ my_game.add_player(Player.new("curly", 125))
 
 my_game.start
 
-my_game.play
+TURNS = 2
+
+my_game.play(TURNS)
+my_game.print_stats
+my_game.show_high_scores

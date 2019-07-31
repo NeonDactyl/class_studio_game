@@ -38,4 +38,8 @@ class Player
     healthy? ? "Healthy" : "Not healthy"
   end
 
+  def <=>(other_player)
+    other_player.score <=> score
+  end
+
 end
