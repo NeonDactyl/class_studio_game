@@ -1,11 +1,15 @@
+require_relative 'treasure_trove'
+
 class Player
 
   attr_accessor :name
   attr_reader :health
 
+
   def initialize(name, health=100)
     @name = name.capitalize
     @health = health
+    @treasures = Hash.new(0)
   end
 
   def to_s
@@ -23,7 +27,11 @@ class Player
   end
 
   def score
-    @health + @name.length
+    @health + @treasures.values.sum
+  end
+
+  def points
+    @treasures.values.sum
   end
 
   def name=(new_name)
@@ -31,15 +39,26 @@ class Player
   end
 
   def healthy?
-    @health >= 150
+    score >= 150
   end
 
   def status
-    healthy? ? "Healthy" : "Not healthy"
+    healthy? ? "Strong" : "Not strong"
   end
 
   def <=>(other_player)
     other_player.score <=> score
+  end
+
+  def get_treasure(treasure)
+    @treasures[treasure.name] += treasure.points
+    puts "#{@name} got a #{treasure.name} worth #{treasure.points} points."
+  end
+
+  def each_treasure
+    @treasures.each do |name, points|
+      yield(Treasure.new(name, points))
+    end
   end
 
 end

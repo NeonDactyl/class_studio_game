@@ -7,8 +7,11 @@ my_game.add_player(Player.new("curly", 125))
 
 my_game.start
 
-TURNS = 2
+TURNS = 15
 
-my_game.play(TURNS)
+my_game.play(TURNS) do
+  my_game.total_points >= 5500
+end
 my_game.print_stats
 my_game.show_high_scores
+puts "\nTotal points across all players: #{my_game.total_points}"

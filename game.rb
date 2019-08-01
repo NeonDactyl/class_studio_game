@@ -26,6 +26,9 @@ class Game
 
   def play(turns)
     1.upto(turns) do |turn|
+      if block_given?
+        break if yield
+      end
       puts "\nRound #{turn}: "
       @players.each do |player|
         GameTurn.take_turn(player)
@@ -40,12 +43,23 @@ class Game
 
     puts "\nUnhealthy players:"
     puts weak
+
+    @players.each do |p|
+      puts "\n#{p.name} has the following treasure points:\n"
+      p.each_treasure { |treasure| puts "#{treasure.name}: #{treasure.points} points"}
+    end
   end
 
   def show_high_scores
     puts "\n#{@title} High Scores:"
     @players.sort.each do |player|
       puts player.name.ljust(20, '.') + player.score.to_s.rjust(4, '.')
+    end
+  end
+
+  def total_points
+    @players.reduce(0) do |sum, player|
+      sum += player.points
     end
   end
 
