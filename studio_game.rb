@@ -1,16 +1,20 @@
 require_relative 'game'
 
 my_game = Game.new("Knuckleheads")
-my_game.add_player(Player.new("moe"))
-my_game.add_player(Player.new("larry", 60))
-my_game.add_player(Player.new("curly", 125))
-
+$player_file = ARGV.shift
+my_game.load($player_file || 'players.csv')
+my_game.add_player(BerserkerPlayer.new('berserker'))
 my_game.start
 
-TURNS = 15
+loop do
+  puts "How many turns would you like to play?"
+  turns = gets.chomp
+  if ['q', 'quit', 'exit'].include? turns
+    my_game.save($player_file || 'players.csv')
+    break
+  end
 
-my_game.play(TURNS) do
-  my_game.total_points >= 5500
+  my_game.play(turns.to_i)
 end
 my_game.print_stats
 my_game.show_high_scores

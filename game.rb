@@ -1,4 +1,6 @@
 require_relative 'player'
+require_relative 'clumsy_player'
+require_relative 'berserker_player'
 require_relative 'die'
 require_relative 'game_turn'
 require_relative 'treasure_trove'
@@ -9,6 +11,21 @@ class Game
     @players = []
     @d20 = Die.new(20)
   end
+
+  def load(file_name)
+    File.readlines(file_name).each do |line|
+      add_player(Player.from_csv(line))
+    end
+  end
+
+  def save(file_name)
+    File.open(file_name, 'w') do |file|
+      @players.sort.each do |player|
+        file.puts "#{player.name},#{player.health}"
+      end
+    end
+  end
+
 
   def add_player(player)
     @players << player
