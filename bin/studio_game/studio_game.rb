@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require_relative '../lib/studio_game/game'
 
 my_game = Game.new("Knuckleheads")
