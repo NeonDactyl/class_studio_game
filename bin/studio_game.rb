@@ -1,8 +1,9 @@
-require_relative 'game'
+require_relative '../lib/studio_game/game'
 
 my_game = Game.new("Knuckleheads")
 $player_file = ARGV.shift
-my_game.load($player_file || 'players.csv')
+default_player_file = File.join(File.dirname(__FILE__), 'players.csv')
+my_game.load($player_file || default_player_file)
 my_game.add_player(BerserkerPlayer.new('berserker'))
 my_game.start
 
